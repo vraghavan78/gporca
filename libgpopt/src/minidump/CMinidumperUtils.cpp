@@ -322,7 +322,6 @@ CMinidumperUtils::PdxlnExecuteMinidump
 	(
 	IMemoryPool *pmp,
 	const CHAR *szFileName,
-	ULONG ulSegments,
 	ULONG ulSessionId,
 	ULONG ulCmdId,
 	COptimizerConfig *poconf,
@@ -330,13 +329,20 @@ CMinidumperUtils::PdxlnExecuteMinidump
 	)
 {
 	GPOS_ASSERT(NULL != szFileName);
-	GPOS_ASSERT(NULL != poconf);
 
 	CAutoTimer at("Minidump", true /*fPrint*/);
 
 	// load dump file
 	CDXLMinidump *pdxlmd = CMinidumperUtils::PdxlmdLoad(pmp, szFileName);
 	GPOS_CHECK_ABORT;
+
+	if (NULL == poconf)
+	{
+		poconf = pdxlmd->Poconf();
+		GPOS_ASSERT(NULL != poconf);
+	}
+
+	ULONG ulSegments = CUtils::UlSegments(poconf);
 
 	CDXLNode *pdxlnPlan = PdxlnExecuteMinidump
 							(

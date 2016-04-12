@@ -474,18 +474,15 @@ PvExec
 		
 		CAutoMemoryPool amp;
 		IMemoryPool *pmp = amp.Pmp();
-		COptimizerConfig* poconf = COptimizerConfig::PoconfDefault(pmp);
 		CDXLNode *pdxlnPlan = CMinidumperUtils::PdxlnExecuteMinidump
 								(
 								pmp,
 								szFileName,
-								GPOPT_TEST_SEGMENTS,
 								1 /*ulSessionId*/,
 								1 /*ulCmdId*/,
-								poconf,
+								NULL, /*poconf*/
 								NULL /*pceeval*/
 								);
-		poconf->Release();
 		pdxlnPlan->Release();
 		CMDCache::Shutdown();
 	}

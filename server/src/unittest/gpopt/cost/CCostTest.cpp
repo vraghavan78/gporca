@@ -370,7 +370,6 @@ CCostTest::EresUnittest_CalibratedCostModel()
 							(
 							pmp,
 							rgszFileNamesCalibratedCostModel[ul],
-							GPOPT_TEST_SEGMENTS,
 							1 /*ulSessionId*/,
 							1 /*ulCmdId*/,
 							poconf,

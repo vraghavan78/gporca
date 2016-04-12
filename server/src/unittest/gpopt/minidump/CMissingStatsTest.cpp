@@ -116,7 +116,6 @@ CMissingStatsTest::EresUnittest_RunTests()
 												(
 												pmp,
 												testCase.m_szInputFile,
-												GPOPT_TEST_SEGMENTS /*ulSegments*/,
 												1 /*ulSessionId*/,
 												1, /*ulCmdId*/
 												poconf,

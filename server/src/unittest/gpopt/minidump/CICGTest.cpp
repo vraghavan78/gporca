@@ -373,7 +373,6 @@ CICGTest::EresUnittest_RunUnsupportedMinidumpTests()
 									(
 									pmp, 
 									rgszUnsupportedFileNames[ul],
-									GPOPT_TEST_SEGMENTS /*ulSegments*/,
 									1 /*ulSessionId*/, 
 									1, /*ulCmdId*/
 									poconf,
@@ -448,7 +447,6 @@ CICGTest::EresUnittest_NegativeIndexApplyTests()
 									(
 									pmp,
 									rgszNegativeIndexApplyFileNames[ul],
-									GPOPT_TEST_SEGMENTS /*ulSegments*/,
 									1 /*ulSessionId*/,
 									1, /*ulCmdId*/
 									poconf,

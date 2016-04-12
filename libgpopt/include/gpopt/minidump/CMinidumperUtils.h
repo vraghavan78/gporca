@@ -74,7 +74,6 @@ namespace gpopt
 				(
 				IMemoryPool *pmp, 
 				const CHAR *szFileName,
-				ULONG ulSegments, 
 				ULONG ulSessionId, 
 				ULONG ulCmdId,
 				COptimizerConfig *poconf,

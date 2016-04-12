@@ -31,7 +31,11 @@
 #include "gpopt/operators/CScalarProjectList.h"
 #include "gpopt/operators/CScalarSubquery.h"
 #include "gpopt/operators/CScalarAggFunc.h"
+#include "gpopt/optimizer/COptimizerConfig.h"
+
 #include "naucrates/md/CMDTypeInt4GPDB.h"
+
+#define GPOPT_DEFAULT_SEGMENT_COUNT 2
 
 // fwd declarations
 namespace gpmd
@@ -968,6 +972,10 @@ namespace gpopt
 			// collapse the top two project nodes, if unable return NULL
 			static
 			CExpression *PexprCollapseProjects(IMemoryPool *pmp, CExpression *pexpr);
+
+			// return the number of segments, default return GPOPT_DEFAULT_SEGMENT_COUNT
+			static
+			ULONG UlSegments(COptimizerConfig *poconf);
 
 			// match function between index get/scan operators
 			template <class T>

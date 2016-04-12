@@ -5750,4 +5750,33 @@ CUtils::PexprCollapseProjects
 						);
 }
 
+//---------------------------------------------------------------------------
+//	@function:
+//		CUtils::UlSegments
+//
+//	@doc:
+//		Return the number of segments, default return GPOPT_TEST_SEGMENTS
+//
+//---------------------------------------------------------------------------
+ULONG
+CUtils::UlSegments
+	(
+	COptimizerConfig *poconf
+	)
+{
+	GPOS_ASSERT(NULL != poconf);
+	ULONG ulSegments = GPOPT_DEFAULT_SEGMENT_COUNT;
+	if (NULL != poconf->Pcm())
+	{
+		ULONG ulSegs = poconf->Pcm()->UlHosts();
+		if (ulSegments < ulSegs)
+		{
+			ulSegments = ulSegs;
+		}
+	}
+
+	return ulSegments;
+}
+
+
 // EOF
