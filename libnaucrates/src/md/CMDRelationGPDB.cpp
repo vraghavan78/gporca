@@ -74,7 +74,6 @@ CMDRelationGPDB::CMDRelationGPDB
 	m_pdrgpmdidCheckConstraint(pdrgpmdidCheckConstraint),
 	m_pmdpartcnstr(pmdpartcnstr),
 	m_fHasOids(fHasOids),
-	m_ulSystemColumns(0),
 	m_phmululNonDroppedCols(NULL),
 	m_phmiulAttno2Pos(NULL),
 	m_pdrgpulNonDroppedCols(NULL)
@@ -97,11 +96,6 @@ CMDRelationGPDB::CMDRelationGPDB
 	for (ULONG ul = 0; ul < ulArity; ul++)
 	{
 		IMDColumn *pmdcol = (*pdrgpmdcol)[ul];
-		BOOL fSystemCol = pmdcol->FSystemColumn();
-		if (fSystemCol)
-		{
-			m_ulSystemColumns++;
-		}
 
 		if (pmdcol->FDropped())
 		{
@@ -109,7 +103,7 @@ CMDRelationGPDB::CMDRelationGPDB
 		}
 		else
 		{
-			if (!fSystemCol)
+			if (!pmdcol->FSystemColumn())
 			{
 				m_pdrgpulNonDroppedCols->Append(GPOS_NEW(m_pmp) ULONG(ul));
 			}
@@ -325,20 +319,6 @@ DrgPul *
 CMDRelationGPDB::PdrgpulNonDroppedCols() const
 {
 	return m_pdrgpulNonDroppedCols;
-}
-
-//---------------------------------------------------------------------------
-//	@function:
-//		CMDRelationGPDB::UlSystemColumns
-//
-//	@doc:
-//		Returns the number of system columns of this relation
-//
-//---------------------------------------------------------------------------
-ULONG
-CMDRelationGPDB::UlSystemColumns() const
-{
-	return m_ulSystemColumns;
 }
 
 //---------------------------------------------------------------------------

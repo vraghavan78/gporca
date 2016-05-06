@@ -63,7 +63,6 @@ CMDRelationCtasGPDB::CMDRelationCtasGPDB
 	m_pdrgpmdcol(pdrgpmdcol),
 	m_pdrgpulDistrColumns(pdrgpulDistrColumns),
 	m_pdrgpdrgpulKeys(pdrgpdrgpulKeys),
-	m_ulSystemColumns(0),
 	m_pdrgpulNonDroppedCols(NULL),
 	m_pdxlctasopt(pdxlctasopt),
 	m_pdrgpiVarTypeMod(pdrgpiVarTypeMod)
@@ -85,11 +84,7 @@ CMDRelationCtasGPDB::CMDRelationCtasGPDB
 		GPOS_ASSERT(!pmdcol->FDropped() && "Cannot create a table with dropped columns");
 
 		BOOL fSystemCol = pmdcol->FSystemColumn();
-		if (fSystemCol)
-		{
-			m_ulSystemColumns++;
-		}
-		else
+		if (!fSystemCol)
 		{
 			m_pdrgpulNonDroppedCols->Append(GPOS_NEW(m_pmp) ULONG(ul));
 		}
@@ -193,21 +188,6 @@ CMDRelationCtasGPDB::UlColumns() const
 	GPOS_ASSERT(NULL != m_pdrgpmdcol);
 
 	return m_pdrgpmdcol->UlLength();
-}
-
-
-//---------------------------------------------------------------------------
-//	@function:
-//		CMDRelationCtasGPDB::UlSystemColumns
-//
-//	@doc:
-//		Returns the number of system columns of this relation
-//
-//---------------------------------------------------------------------------
-ULONG
-CMDRelationCtasGPDB::UlSystemColumns() const
-{
-	return m_ulSystemColumns;
 }
 
 //---------------------------------------------------------------------------

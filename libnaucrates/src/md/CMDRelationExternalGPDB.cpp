@@ -65,7 +65,6 @@ CMDRelationExternalGPDB::CMDRelationExternalGPDB
 	m_iRejectLimit(iRejectLimit),
 	m_fRejLimitInRows(fRejLimitInRows),
 	m_pmdidFmtErrRel(pmdidFmtErrRel),
-	m_ulSystemColumns(0),
 	m_phmululNonDroppedCols(NULL),
 	m_phmiulAttno2Pos(NULL),
 	m_pdrgpulNonDroppedCols(NULL)
@@ -89,19 +88,13 @@ CMDRelationExternalGPDB::CMDRelationExternalGPDB
 	{
 		IMDColumn *pmdcol = (*pdrgpmdcol)[ul];
 
-		BOOL fSystemCol = pmdcol->FSystemColumn();
-		if (fSystemCol)
-		{
-			m_ulSystemColumns++;
-		}
-		
 		if (pmdcol->FDropped())
 		{
 			m_ulDroppedCols++;
 		}
 		else		
 		{
-			if (!fSystemCol)
+			if (!pmdcol->FSystemColumn())
 			{
 				m_pdrgpulNonDroppedCols->Append(GPOS_NEW(m_pmp) ULONG(ul));
 			}
@@ -226,20 +219,6 @@ ULONG
 CMDRelationExternalGPDB::UlNonDroppedCols() const
 {	
 	return UlColumns() - m_ulDroppedCols;
-}
-
-//---------------------------------------------------------------------------
-//	@function:
-//		CMDRelationExternalGPDB::UlSystemColumns
-//
-//	@doc:
-//		Returns the number of system columns of this relation
-//
-//---------------------------------------------------------------------------
-ULONG
-CMDRelationExternalGPDB::UlSystemColumns() const
-{
-	return m_ulSystemColumns;
 }
 
 //---------------------------------------------------------------------------
