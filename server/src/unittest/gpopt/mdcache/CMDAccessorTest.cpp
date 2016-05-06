@@ -512,12 +512,9 @@ CMDAccessorTest::EresUnittest_CheckConstraint()
 	for (ULONG ul = 0; ul < ulCols; ul++)
 	{
 		const IMDColumn *pmdcol = pmdrel->Pmdcol(ul);
-		if (!pmdcol->FSystemColumn())
-		{
-			const IMDType *pmdtype = mda.Pmdtype(pmdcol->PmdidType());
-			CColRef *pcr = pcf->PcrCreate(pmdtype);
-			pdrgpcr->Append(pcr);
-		}
+		const IMDType *pmdtype = mda.Pmdtype(pmdcol->PmdidType());
+		CColRef *pcr = pcf->PcrCreate(pmdtype);
+		pdrgpcr->Append(pcr);
 	}
 
 	// get one of its check constraint
@@ -592,12 +589,9 @@ CMDAccessorTest::EresUnittest_IndexPartConstraint()
 	{
 		const IMDColumn *pmdcol = pmdrel->Pmdcol(ul);
 
-		if (!pmdcol->FSystemColumn())
-		{
-			const IMDType *pmdtype = mda.Pmdtype(pmdcol->PmdidType());
-			CColRef *pcr = pcf->PcrCreate(pmdtype);
-			pdrgpcr->Append(pcr);
-		}
+		const IMDType *pmdtype = mda.Pmdtype(pmdcol->PmdidType());
+		CColRef *pcr = pcf->PcrCreate(pmdtype);
+		pdrgpcr->Append(pcr);
 	}
 
 	// get one of its indexes

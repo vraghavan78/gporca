@@ -37,6 +37,7 @@ CMDUtilsGPDB::InitializeMDColInfo
 {
 	GPOS_ASSERT(NULL != pdrgpmdcol);
 	GPOS_ASSERT(NULL != phmiulAttno2Pos);
+	GPOS_ASSERT(NULL != pdrgpulNonDroppedCols);
 
 	const ULONG ulArity = pdrgpmdcol->UlLength();
 	ULONG ulPosNonDropped = 0;
