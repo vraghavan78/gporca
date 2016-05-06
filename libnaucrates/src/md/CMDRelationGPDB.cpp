@@ -112,7 +112,7 @@ CMDRelationGPDB::CMDRelationGPDB
 		{
 			m_ulDroppedCols++;
 		}
-		else	
+		else
 		{
 			if (!fSystemCol)
 			{
@@ -699,7 +699,7 @@ CMDRelationGPDB::Serialize
 						CDXLTokens::PstrToken(EdxltokenColumns));
 	for (ULONG ul = 0; ul < m_pdrgpmdcol->UlLength(); ul++)
 	{
-		CMDColumn *pmdcol = (*m_pdrgpmdcol)[ul];
+		IMDColumn *pmdcol = (*m_pdrgpmdcol)[ul];
 		pmdcol->Serialize(pxmlser);
 
 		GPOS_CHECK_ABORT;

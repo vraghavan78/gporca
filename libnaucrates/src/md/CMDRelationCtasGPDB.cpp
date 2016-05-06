@@ -90,7 +90,7 @@ CMDRelationCtasGPDB::CMDRelationCtasGPDB
 		else
 		{
 			m_pdrgpulNonDroppedCols->Append(GPOS_NEW(m_pmp) ULONG(ul));
-		}		
+		}
 
 		(void) m_phmiulAttno2Pos->FInsert
 									(
@@ -340,7 +340,7 @@ CMDRelationCtasGPDB::Serialize
 	const ULONG ulCols = m_pdrgpmdcol->UlLength();
 	for (ULONG ul = 0; ul < ulCols; ul++)
 	{
-		CMDColumn *pmdcol = (*m_pdrgpmdcol)[ul];
+		IMDColumn *pmdcol = (*m_pdrgpmdcol)[ul];
 		pmdcol->Serialize(pxmlser);
 	}
 
