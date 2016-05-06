@@ -82,7 +82,6 @@ CMDRelationExternalGPDB::CMDRelationExternalGPDB
 	m_phmiulAttno2Pos = GPOS_NEW(m_pmp) HMIUl(m_pmp);
 	m_pdrgpulNonDroppedCols = GPOS_NEW(m_pmp) DrgPul(m_pmp);
 	
-	ULONG ulPosNonDropped = 0;
 	const ULONG ulArity = pdrgpmdcol->UlLength();
 	for (ULONG ul = 0; ul < ulArity; ul++)
 	{
@@ -98,13 +97,10 @@ CMDRelationExternalGPDB::CMDRelationExternalGPDB
 			{
 				m_pdrgpulNonDroppedCols->Append(GPOS_NEW(m_pmp) ULONG(ul));
 			}
-
-			(void) m_phmululNonDroppedCols->FInsert(GPOS_NEW(m_pmp) ULONG(ul), GPOS_NEW(m_pmp) ULONG(ulPosNonDropped));
-			ulPosNonDropped++;
 		}
 	}
 
-	CMDUtilsGPDB::InitializeAttrNumToArrayPositionMap(pmp, pdrgpmdcol, m_phmiulAttno2Pos);
+	CMDUtilsGPDB::InitializeMDColInfo(pmp, pdrgpmdcol, m_phmiulAttno2Pos, m_phmululNonDroppedCols);
 
 	m_pstr = CDXLUtils::PstrSerializeMDObj(m_pmp, this, false /*fSerializeHeader*/, false /*fIndent*/);
 }

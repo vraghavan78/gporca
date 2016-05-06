@@ -35,11 +35,12 @@ namespace gpmd
 
 			// initialize the attribute number to column array position mapping
 			static
-			void InitializeAttrNumToArrayPositionMap
+			void InitializeMDColInfo
 				(
 				IMemoryPool *pmp,
 				DrgPmdcol *pdrgpmdcol,
-				HMIUl *phmiulAttno2Pos
+				HMIUl *phmiulAttno2Pos,
+				HMUlUl *phmululNonDroppedCols
 				);
 
 	};

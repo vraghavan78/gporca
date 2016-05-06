@@ -93,7 +93,7 @@ namespace gpmd
 
 			// the original positions of all the non-dropped columns
 			DrgPul *m_pdrgpulNonDroppedCols;
-			
+
 			// storage options
 			CDXLCtasStorageOptions *m_pdxlctasopt;
 

@@ -90,7 +90,7 @@ CMDRelationCtasGPDB::CMDRelationCtasGPDB
 		}
 	}
 
-	CMDUtilsGPDB::InitializeAttrNumToArrayPositionMap(pmp, pdrgpmdcol, m_phmiulAttno2Pos);
+	CMDUtilsGPDB::InitializeMDColInfo(pmp, pdrgpmdcol, m_phmiulAttno2Pos, NULL /* m_phmululNonDroppedCols */);
 
 	m_pstr = CDXLUtils::PstrSerializeMDObj(m_pmp, this, false /*fSerializeHeader*/, false /*fIndent*/);
 }
