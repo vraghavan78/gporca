@@ -20,8 +20,10 @@ using namespace gpmd;
 //		CMDUtilsGPDB::InitializeMDColInfo
 //
 //	@doc:
-//		Initialize the attribute number to column array position mapping
-//
+//		From the array of metadata columns populate the following output variables
+//		phmiulAttno2Pos - attribute number to column array position mapping
+//		pdrgpulNonDroppedCols - array of non-dropped columns
+//		phmululNonDroppedCols - column array position mapping to position array of non-dropped columns
 //---------------------------------------------------------------------------
 void
 CMDUtilsGPDB::InitializeMDColInfo
@@ -29,13 +31,13 @@ CMDUtilsGPDB::InitializeMDColInfo
 	IMemoryPool *pmp,
 	DrgPmdcol *pdrgpmdcol,
 	HMIUl *phmiulAttno2Pos,
+	DrgPul *pdrgpulNonDroppedCols,
 	HMUlUl *phmululNonDroppedCols
 	)
 {
 	GPOS_ASSERT(NULL != pdrgpmdcol);
 	GPOS_ASSERT(NULL != phmiulAttno2Pos);
 
-	BOOL fMaintainNonDroppedCols = (NULL != phmululNonDroppedCols);
 	const ULONG ulArity = pdrgpmdcol->UlLength();
 	ULONG ulPosNonDropped = 0;
 	for (ULONG ul = 0; ul < ulArity; ul++)
@@ -49,9 +51,13 @@ CMDUtilsGPDB::InitializeMDColInfo
 								);
 
 
-		if (fMaintainNonDroppedCols && !pmdcol->FDropped())
+		if (!pmdcol->FDropped())
 		{
-			(void) phmululNonDroppedCols->FInsert(GPOS_NEW(pmp) ULONG(ul), GPOS_NEW(pmp) ULONG(ulPosNonDropped));
+			pdrgpulNonDroppedCols->Append(GPOS_NEW(pmp) ULONG(ul));
+			if (NULL != phmululNonDroppedCols)
+			{
+				(void) phmululNonDroppedCols->FInsert(GPOS_NEW(pmp) ULONG(ul), GPOS_NEW(pmp) ULONG(ulPosNonDropped));
+			}
 			ulPosNonDropped++;
 		}
 	}

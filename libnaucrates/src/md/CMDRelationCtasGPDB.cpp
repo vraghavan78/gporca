@@ -77,20 +77,7 @@ CMDRelationCtasGPDB::CMDRelationCtasGPDB
 	m_phmiulAttno2Pos = GPOS_NEW(m_pmp) HMIUl(m_pmp);
 	m_pdrgpulNonDroppedCols = GPOS_NEW(m_pmp) DrgPul(m_pmp);
 	
-	const ULONG ulArity = pdrgpmdcol->UlLength();
-	for (ULONG ul = 0; ul < ulArity; ul++)
-	{
-		IMDColumn *pmdcol = (*pdrgpmdcol)[ul];
-		GPOS_ASSERT(!pmdcol->FDropped() && "Cannot create a table with dropped columns");
-
-		BOOL fSystemCol = pmdcol->FSystemColumn();
-		if (!fSystemCol)
-		{
-			m_pdrgpulNonDroppedCols->Append(GPOS_NEW(m_pmp) ULONG(ul));
-		}
-	}
-
-	CMDUtilsGPDB::InitializeMDColInfo(pmp, pdrgpmdcol, m_phmiulAttno2Pos, NULL /* m_phmululNonDroppedCols */);
+	CMDUtilsGPDB::InitializeMDColInfo(pmp, pdrgpmdcol, m_phmiulAttno2Pos, m_pdrgpulNonDroppedCols, NULL /* m_phmululNonDroppedCols */);
 
 	m_pstr = CDXLUtils::PstrSerializeMDObj(m_pmp, this, false /*fSerializeHeader*/, false /*fIndent*/);
 }

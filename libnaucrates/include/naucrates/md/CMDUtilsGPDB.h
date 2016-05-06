@@ -40,6 +40,7 @@ namespace gpmd
 				IMemoryPool *pmp,
 				DrgPmdcol *pdrgpmdcol,
 				HMIUl *phmiulAttno2Pos,
+				DrgPul *pdrgpulNonDroppedCols,
 				HMUlUl *phmululNonDroppedCols
 				);
 
