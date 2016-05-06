@@ -119,36 +119,4 @@ IMDRelation::PstrColumns
 	return pstr;
 }
 
-//---------------------------------------------------------------------------
-//	@function:
-//		IMDRelation::InitializeAttrNumToArrayPositionMap
-//
-//	@doc:
-//		Initialize the attribute number to column array position mapping
-//
-//---------------------------------------------------------------------------
-void
-IMDRelation::InitializeAttrNumToArrayPositionMap
-	(
-	IMemoryPool *pmp,
-	DrgPmdcol *pdrgpmdcol,
-	HMIUl *phmiulAttno2Pos
-	)
-{
-	GPOS_ASSERT(NULL != pdrgpmdcol);
-	GPOS_ASSERT(NULL != phmiulAttno2Pos);
-
-	const ULONG ulArity = pdrgpmdcol->UlLength();
-	for (ULONG ul = 0; ul < ulArity; ul++)
-	{
-		const IMDColumn *pmdcol = (*pdrgpmdcol)[ul];
-
-		(void) phmiulAttno2Pos->FInsert
-								(
-								GPOS_NEW(pmp) INT(pmdcol->IAttno()),
-								GPOS_NEW(pmp) ULONG(ul)
-								);
-	}
-}
-
 // EOF

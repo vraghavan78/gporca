@@ -17,6 +17,8 @@
 //---------------------------------------------------------------------------
 
 #include "naucrates/md/CMDRelationCtasGPDB.h"
+#include "naucrates/md/CMDUtilsGPDB.h"
+
 #include "naucrates/dxl/xml/CXMLSerializer.h"
 #include "naucrates/dxl/operators/CDXLCtasStorageOptions.h"
 
@@ -93,7 +95,7 @@ CMDRelationCtasGPDB::CMDRelationCtasGPDB
 		}
 	}
 
-	IMDRelation::InitializeAttrNumToArrayPositionMap(pmp, pdrgpmdcol, m_phmiulAttno2Pos);
+	CMDUtilsGPDB::InitializeAttrNumToArrayPositionMap(pmp, pdrgpmdcol, m_phmiulAttno2Pos);
 
 	m_pstr = CDXLUtils::PstrSerializeMDObj(m_pmp, this, false /*fSerializeHeader*/, false /*fIndent*/);
 }
