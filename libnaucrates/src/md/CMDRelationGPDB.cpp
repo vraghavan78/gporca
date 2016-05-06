@@ -102,12 +102,6 @@ CMDRelationGPDB::CMDRelationGPDB
 			m_ulSystemColumns++;
 		}
 
-		(void) m_phmiulAttno2Pos->FInsert
-									(
-									GPOS_NEW(m_pmp) INT(pmdcol->IAttno()),
-									GPOS_NEW(m_pmp) ULONG(ul)
-									);
-
 		if (pmdcol->FDropped())
 		{
 			m_ulDroppedCols++;
@@ -122,6 +116,9 @@ CMDRelationGPDB::CMDRelationGPDB
 			ulPosNonDropped++;
 		}
 	}
+
+	IMDRelation::InitializeAttrNumToArrayPositionMap(pmp, pdrgpmdcol, m_phmiulAttno2Pos);
+
 	m_pstr = CDXLUtils::PstrSerializeMDObj(m_pmp, this, false /*fSerializeHeader*/, false /*fIndent*/);
 }
 

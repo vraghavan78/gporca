@@ -209,6 +209,16 @@ namespace gpmd
 			// name of storage type
 			static
 			const CWStringConst *PstrStorageType(IMDRelation::Erelstoragetype erelstorage);
+
+			// initialize the attribute number to column array position mapping
+			static
+			void InitializeAttrNumToArrayPositionMap
+				(
+				IMemoryPool *pmp,
+				DrgPmdcol *pdrgpmdcol,
+				HMIUl *phmiulAttno2Pos
+				);
+
 	};
 	
 }
