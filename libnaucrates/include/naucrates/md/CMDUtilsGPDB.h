@@ -6,7 +6,7 @@
 //		CMDUtilsGPDB.h
 //
 //	@doc:
-//		Utils function that are used by GPDB related metadata
+//		Utility functions that are used by GPDB related metadata
 //
 //---------------------------------------------------------------------------
 
@@ -26,22 +26,22 @@ namespace gpmd
 	//		CMDUtilsGPDB
 	//
 	//	@doc:
-	//		Utils function that are used by GPDB related metadata
+	//		Utility functions that are used by GPDB related metadata
 	//
 	//---------------------------------------------------------------------------
 	class CMDUtilsGPDB
 	{
 		public:
 
-			// initialize the attribute number to column array position mapping
+			// initialize the output arguments based on the array of column metadata
 			static
 			void InitializeMDColInfo
 				(
 				IMemoryPool *pmp,
 				DrgPmdcol *pdrgpmdcol,
-				HMIUl *phmiulAttno2Pos,
-				DrgPul *pdrgpulNonDroppedCols,
-				HMUlUl *phmululNonDroppedCols
+				HMIUl *phmiulAttno2Pos, // output hash map of column attribute number to position in array of column metadata
+				DrgPul *pdrgpulNonDroppedCols, // output array of non-dropped columns
+				HMUlUl *phmululNonDroppedCols // output hash map of column array position mapping to position array of non-dropped columns
 				);
 
 	};

@@ -6,7 +6,7 @@
 //		CMDUtilsGPDB.cpp
 //
 //	@doc:
-//		Implementation of utils function that are used by GPDB related metadata
+//		Implementation of utility functions that are used by GPDB related metadata
 //
 //---------------------------------------------------------------------------
 
