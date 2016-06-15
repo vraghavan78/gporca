@@ -1052,47 +1052,6 @@ CTranslatorDXLToExpr::Pdrgpcr
 
 //---------------------------------------------------------------------------
 //	@function:
-//		CTranslatorDXLToExpr::Pdrgpdxlcd
-//
-//	@doc:
-// 		Construct an array of new column descriptors from the array of
-//		DXL column descriptors
-//
-//---------------------------------------------------------------------------
-DrgPcoldesc *
-CTranslatorDXLToExpr::Pdrgpdxlcd
-	(
-	const DrgPdxlcd *pdrgpdxlcd
-	)
-{
-	DrgPcoldesc *pdrgpcoldescOutput = GPOS_NEW(m_pmp) DrgPcoldesc(m_pmp);
-	const ULONG ulColumns = pdrgpdxlcd->UlLength();
-
-	for (ULONG ul = 0; ul < ulColumns; ul++)
-	{
-		CDXLColDescr *pdxlcd = (*pdrgpdxlcd)[ul];
-		const IMDType *pmdtype = m_pmda->Pmdtype(pdxlcd->PmdidType());
-		CName name(m_pmp, pdxlcd->Pmdname()->Pstr());
-
-		const ULONG ulWidth = pdxlcd->UlWidth();
-
-		CColumnDescriptor *pcoldesc = GPOS_NEW(m_pmp) CColumnDescriptor
-													(
-													m_pmp,
-													pmdtype,
-													name,
-													ul + 1, // iAttno
-													false, // FNullable
-													ulWidth
-													);
-		pdrgpcoldescOutput->Append(pcoldesc);
-	}
-
-	return pdrgpcoldescOutput;
-}
-
-//---------------------------------------------------------------------------
-//	@function:
 //		CTranslatorDXLToExpr::ConstructDXLColId2ColRefMapping
 //
 //	@doc:
@@ -2421,8 +2380,30 @@ CTranslatorDXLToExpr::PexprLogicalConstTableGet
 {
 	CDXLLogicalConstTable *pdxlopConstTable = CDXLLogicalConstTable::PdxlopConvert(pdxlnConstTable->Pdxlop());
 
+	const DrgPdxlcd *pdrgpdxlcd = pdxlopConstTable->Pdrgpdxlcd();
 	// translate the column descriptors
-	DrgPcoldesc *pdrgpcoldesc = Pdrgpdxlcd(pdxlopConstTable->Pdrgpdxlcd());
+	DrgPcoldesc *pdrgpcoldesc = GPOS_NEW(m_pmp) DrgPcoldesc(m_pmp);
+	const ULONG ulColumns = pdrgpdxlcd->UlLength();
+
+	for (ULONG ul = 0; ul < ulColumns; ul++)
+	{
+		CDXLColDescr *pdxlcd = (*pdrgpdxlcd)[ul];
+		const IMDType *pmdtype = m_pmda->Pmdtype(pdxlcd->PmdidType());
+		CName name(m_pmp, pdxlcd->Pmdname()->Pstr());
+
+		const ULONG ulWidth = pdxlcd->UlWidth();
+
+		CColumnDescriptor *pcoldesc = GPOS_NEW(m_pmp) CColumnDescriptor
+														(
+														m_pmp,
+														pmdtype,
+														name,
+														ul + 1, // iAttno
+														true, // FNullable
+														ulWidth
+														);
+		pdrgpcoldescOutput->Append(pcoldesc);
+	}
 
 	DrgPdrgPdatum *pdrgpdrgpdatum = GPOS_NEW(m_pmp) DrgPdrgPdatum(m_pmp);
 	
