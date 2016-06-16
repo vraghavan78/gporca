@@ -2381,33 +2381,33 @@ CTranslatorDXLToExpr::PexprLogicalConstTableGet
 	CDXLLogicalConstTable *pdxlopConstTable = CDXLLogicalConstTable::PdxlopConvert(pdxlnConstTable->Pdxlop());
 
 	const DrgPdxlcd *pdrgpdxlcd = pdxlopConstTable->Pdrgpdxlcd();
+
 	// translate the column descriptors
 	DrgPcoldesc *pdrgpcoldesc = GPOS_NEW(m_pmp) DrgPcoldesc(m_pmp);
 	const ULONG ulColumns = pdrgpdxlcd->UlLength();
 
-	for (ULONG ul = 0; ul < ulColumns; ul++)
+	for (ULONG ulColIdx = 0; ulColIdx < ulColumns; ulColIdx++)
 	{
-		CDXLColDescr *pdxlcd = (*pdrgpdxlcd)[ul];
+		CDXLColDescr *pdxlcd = (*pdrgpdxlcd)[ulColIdx];
 		const IMDType *pmdtype = m_pmda->Pmdtype(pdxlcd->PmdidType());
 		CName name(m_pmp, pdxlcd->Pmdname()->Pstr());
 
 		const ULONG ulWidth = pdxlcd->UlWidth();
-
 		CColumnDescriptor *pcoldesc = GPOS_NEW(m_pmp) CColumnDescriptor
 														(
 														m_pmp,
 														pmdtype,
 														name,
-														ul + 1, // iAttno
+														ulColIdx + 1, // iAttno
 														true, // FNullable
 														ulWidth
 														);
-		pdrgpcoldescOutput->Append(pcoldesc);
+		pdrgpcoldesc->Append(pcoldesc);
 	}
 
+	// translate values
 	DrgPdrgPdatum *pdrgpdrgpdatum = GPOS_NEW(m_pmp) DrgPdrgPdatum(m_pmp);
 	
-	// translate values
 	const ULONG ulValues = pdxlopConstTable->UlTupleCount();
 	for (ULONG ul = 0; ul < ulValues; ul++)
 	{
